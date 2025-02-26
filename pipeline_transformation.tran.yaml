@@ -1,0 +1,283 @@
+type: "transformation"
+version: "1.0"
+pipeline:
+  components:
+    Customers:
+      type: "table-input"
+      parameters:
+        componentName: "Customers"
+        database: "PC_MATILLION_DEV_DB"
+        schema: "SRC"
+        targetTable: "Customers"
+        columnNames:
+        - "data"
+        timeOffset:
+    Extract Nested Data:
+      type: "extract-nested-data-sf"
+      sources:
+      - "Customers"
+      parameters:
+        componentName: "Extract Nested Data"
+        includeInputColumns: "No"
+        columns:
+        - name: "data"
+          datatype: "VARIANT"
+          size: "0"
+          decimalPlaces: "0"
+          columnName: "data"
+          aliasName: "data"
+          isArray: "true"
+          include: "false"
+          childElements:
+          - name: "data-element"
+            datatype: "VARIANT"
+            size: "0"
+            decimalPlaces: "0"
+            columnName: "data"
+            aliasName: "data-element"
+            isArray: "false"
+            include: "false"
+            childElements:
+            - name: "customer_rid"
+              datatype: "NUMBER"
+              size: "0"
+              decimalPlaces: "0"
+              columnName: "data"
+              aliasName: "customer_rid"
+              isArray: "false"
+              include: "true"
+            - name: "account_name"
+              datatype: "VARCHAR"
+              size: "0"
+              decimalPlaces: "0"
+              columnName: "data"
+              aliasName: "account_name"
+              isArray: "false"
+              include: "true"
+        outerJoin: "No"
+        inputAlias: "i"
+        arrayPrefix: "f"
+        castingMethod: "Fail on invalid data"
+        caseColumnAliasNames: "No"
+    Rewrite Table:
+      type: "rewrite-table"
+      sources:
+      - "Extract Nested Data"
+      parameters:
+        componentName: "Rewrite Table"
+        warehouse: "[Environment Default]"
+        database: "[Environment Default]"
+        schema: "SRC"
+        targetTable: "Customers_src"
+        orderBy:
+    SQL:
+      type: "sql"
+      sources:
+      - "Extract Nested Data"
+      parameters:
+        componentName: "SQL"
+        query: "select \"customer_rid\",\r\ncase when \"customer_rid\" ='2' then '200'\r\
+          \nelse \"account_name\" end as \"account_name\"\r\nfrom \"SRC\".\"Customers_src\""
+    Aggregate:
+      type: "aggregate"
+      sources:
+      - "SQL"
+      parameters:
+        componentName: "Aggregate"
+        groupings:
+        - "account_name"
+        aggregations:
+        - - "customer_rid"
+          - "Count"
+        groupingType: "Group By"
+    SQL 2:
+      type: "sql"
+      sources:
+      - "Aggregate"
+      parameters:
+        componentName: "SQL 2"
+        query: "select sum(\"count_customer_rid\") as total_customers\r\nfrom $T{Aggregate}\r\
+          \n"
+    Calculator:
+      type: "calculator"
+      sources:
+      - "Extract Nested Data"
+      parameters:
+        componentName: "Calculator"
+        includeInputColumns: "Yes"
+        calculations:
+        - - "\"customer_rid\"*\"customer_rid\""
+          - "sum"
+    Construct Variant:
+      type: "construct-variant"
+      sources:
+      - "Extract Nested Data"
+      parameters:
+        componentName: "Construct Variant"
+        columnMappings:
+        - - "customer_rid"
+          - "sum"
+        - - "account_name"
+          - "name"
+        outputSlot: "data"
+    Split Field:
+      type: "split-field"
+      sources:
+      - "Extract Nested Data"
+      parameters:
+        componentName: "Split Field"
+        inputColumn: "account_name"
+        delimiter: " "
+        outputColumns:
+        - - "1"
+          - "firstname"
+        includeInputColumn: "No"
+    Detect Changes:
+      type: "detect-changes"
+      sources:
+      - "Extract Nested Data"
+      - "SQL"
+      parameters:
+        componentName: "Detect Changes"
+        masterTable: "Extract Nested Data"
+        matchKeys:
+        - "customer_rid"
+        compareColumns:
+        - "account_name"
+        outputColumnMapping:
+        indicatorColumn: "indicator"
+    SQL 3:
+      type: "sql"
+      sources:
+      - "Detect Changes"
+      - "Extract Nested Data"
+      parameters:
+        componentName: "SQL 3"
+        query: "select *\r\nfrom $T{Extract Nested Data}\r\nwhere \"customer_rid\"\
+          \ in (select \"customer_rid\" from $T{Detect Changes} where \"indicator\"\
+          ='C')\r\n"
+    SQL 4:
+      type: "sql"
+      sources:
+      - "SQL 2"
+      parameters:
+        componentName: "SQL 4"
+        query: "select distinct color from \"SRC\".\"MS_PRODUCT\""
+    Map Values:
+      type: "map-values"
+      sources:
+      - "SQL 4"
+      parameters:
+        componentName: "Map Values"
+        valueMap:
+          fromGrid:
+            variable: "grid_color"
+            columns:
+            - "Input_Column"
+            - "Qualifier"
+            - "Comparator"
+            - "Comparison_Value"
+            - "Then_Value"
+        columnName: "new_color"
+        other: "00"
+  variables:
+    grid_color:
+      metadata:
+        type: "GRID"
+        description: ""
+        scope: "COPIED"
+        visibility: "PUBLIC"
+        columns:
+          Input_Column:
+            columnType: "TEXT"
+          Qualifier:
+            columnType: "TEXT"
+          Comparator:
+            columnType: "TEXT"
+          Comparison_Value:
+            columnType: "TEXT"
+          Then_Value:
+            columnType: "NUMBER"
+      defaultValue:
+      - - "COLOR"
+        - "Is"
+        - "Equal To"
+        - "Black"
+        - "0000"
+      - - "COLOR"
+        - "Is"
+        - "Equal To"
+        - "White"
+        - "1000"
+      - - "COLOR"
+        - "Is"
+        - "Equal To"
+        - "Red"
+        - "5000"
+design:
+  components:
+    Customers:
+      position:
+        x: -310
+        "y": -10
+      tempMetlId: 1
+    Extract Nested Data:
+      position:
+        x: -150
+        "y": -10
+      tempMetlId: 2
+    Rewrite Table:
+      position:
+        x: -60
+        "y": 170
+      tempMetlId: 3
+    SQL:
+      position:
+        x: 30
+        "y": -140
+      tempMetlId: 4
+    Aggregate:
+      position:
+        x: 210
+        "y": -150
+      tempMetlId: 5
+    SQL 2:
+      position:
+        x: 360
+        "y": -90
+      tempMetlId: 6
+    Calculator:
+      position:
+        x: 240
+        "y": 300
+      tempMetlId: 8
+    Construct Variant:
+      position:
+        x: 260
+        "y": 160
+      tempMetlId: 9
+    Split Field:
+      position:
+        x: -150
+        "y": 320
+      tempMetlId: 10
+    Detect Changes:
+      position:
+        x: 430
+        "y": 110
+      tempMetlId: 11
+    SQL 3:
+      position:
+        x: 570
+        "y": -10
+      tempMetlId: 12
+    SQL 4:
+      position:
+        x: 520
+        "y": -130
+      tempMetlId: 13
+    Map Values:
+      position:
+        x: 680
+        "y": -130
+      tempMetlId: 14
