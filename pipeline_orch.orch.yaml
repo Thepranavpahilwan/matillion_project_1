@@ -1,0 +1,104 @@
+type: "orchestration"
+version: "1.0"
+pipeline:
+  components:
+    Start:
+      type: "start"
+      transitions:
+        unconditional:
+        - "Create Table 2"
+      parameters:
+        componentName: "Start"
+    Create Table 2:
+      type: "create-table"
+      transitions:
+        success:
+        - "S3 Load"
+      parameters:
+        componentName: "Create Table 2"
+        createReplace: "Replace"
+        database: "PC_MATILLION_DEV_DB"
+        schema: "SRC"
+        newTableName: "Customers"
+        tableType: "Permanent"
+        columns:
+        - - "data"
+          - "VARIANT"
+          - ""
+          - ""
+          - ""
+          - "No"
+          - "No"
+          - ""
+          - ""
+        defaultDdlCollation:
+        primaryKeys:
+        clusteringKeys:
+        dataRetentionTimeInDays:
+        comment:
+      postProcessing:
+        updateScalarVariables:
+    S3 Load:
+      type: "s3-load"
+      transitions:
+        success:
+        - "End Success"
+      parameters:
+        componentName: "S3 Load"
+        stage: "[Custom]"
+        authentication: "Credentials"
+        s3ObjectPrefix: "s3://devrel.matillion.com/"
+        pattern: "solutions/GreenWave/customer_accounts.json"
+        encryption: "None"
+        warehouse: "[Environment Default]"
+        database: "[Environment Default]"
+        schema: "SRC"
+        targetTable: "Customers"
+        loadColumns:
+        - "data"
+        format: "[Custom]"
+        fileType: "JSON"
+        compression: "AUTO"
+        enableOctal:
+        allowDuplicates:
+        stripOuterArray:
+        stripNullValues:
+        ignoreUtf8Errors:
+        nullIf1:
+        trimSpace1:
+        onError: "Abort Statement"
+        sizeLimitB:
+        purgeFiles: "False"
+        matchByColumnName:
+        truncateColumns: "False"
+        forceLoad: "False"
+      postProcessing:
+        updateScalarVariables:
+    End Success:
+      type: "end-success"
+      parameters:
+        componentName: "End Success"
+      postProcessing:
+        updateScalarVariables:
+design:
+  components:
+    Start:
+      position:
+        x: -130
+        "y": 0
+      tempMetlId: 1
+    Create Table 2:
+      position:
+        x: -20
+        "y": 0
+      tempMetlId: 3
+    S3 Load:
+      position:
+        x: 80
+        "y": 0
+      tempMetlId: 4
+    End Success:
+      position:
+        x: 180
+        "y": 0
+      tempMetlId: 5
