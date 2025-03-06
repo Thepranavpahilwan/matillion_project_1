@@ -180,6 +180,256 @@ pipeline:
             - "Then_Value"
         columnName: "new_color"
         other: "00"
+    MS_CUSTOMER:
+      type: "sql"
+      sources:
+      - "Detect Changes"
+      parameters:
+        componentName: "MS_CUSTOMER"
+        query: "select *\r\nfrom \"SRC\".\"MS_CUSTOMER\" "
+    MS_ADDRESS:
+      type: "table-input"
+      parameters:
+        componentName: "MS_ADDRESS"
+        database: "[Environment Default]"
+        schema: "SRC"
+        targetTable: "MS_ADDRESS"
+        columnNames:
+        - "ADDRESSID"
+        - "ADDRESSLINE1"
+        - "ADDRESSLINE2"
+        - "CITY"
+        - "STATEPROVINCE"
+        - "COUNTRYREGION"
+        - "POSTALCODE"
+        - "ROWGUID"
+        - "MODIFIEDDATE"
+        - "MATILLION_BATCH_ID"
+        - "MATILLION_UPDATED_TIMESTAMP"
+        timeOffset:
+    MS_CUSTOMERADDRESS:
+      type: "table-input"
+      parameters:
+        componentName: "MS_CUSTOMERADDRESS"
+        database: "[Environment Default]"
+        schema: "SRC"
+        targetTable: "MS_CUSTOMERADDRESS"
+        columnNames:
+        - "CUSTOMERID"
+        - "ADDRESSID"
+        - "ADDRESSTYPE"
+        - "ROWGUID"
+        - "MODIFIEDDATE"
+        - "MATILLION_BATCH_ID"
+        - "MATILLION_UPDATED_TIMESTAMP"
+        timeOffset:
+    Join:
+      type: "join"
+      sources:
+      - "MS_CUSTOMER"
+      - "MS_ADDRESS"
+      - "MS_CUSTOMERADDRESS"
+      parameters:
+        componentName: "Join"
+        mainTable: "MS_CUSTOMER"
+        mainTableAlias: "dimesion_cust"
+        joins:
+        - - "MS_CUSTOMERADDRESS"
+          - "fact_cust_add"
+          - "Inner"
+        - - "MS_ADDRESS"
+          - "dimen_add"
+          - "Inner"
+        joinExpressions:
+        - - "\"dimesion_cust\".\"CUSTOMERID\"=\"fact_cust_add\".\"CUSTOMERID\""
+          - "dimesion_cust_Inner_fact_cust_add"
+        - - "\"fact_cust_add\".\"ADDRESSID\"=\"dimen_add\".\"ADDRESSID\""
+          - "dimesion_cust_Inner_dimen_add"
+        columnMappings:
+        - - "dimesion_cust.CUSTOMERID"
+          - "cust_id"
+        - - "fact_cust_add.ADDRESSID"
+          - "add_id"
+        - - "dimen_add.ADDRESSLINE1"
+          - "address"
+    Create View:
+      type: "create-view"
+      sources:
+      - "Join"
+      parameters:
+        componentName: "Create View"
+        database: "[Environment Default]"
+        schema: "TEST_OUTPUTS"
+        viewName: "Join_test"
+        secureView: "Yes"
+        viewType: "Standard"
+    Generate Data:
+      type: "fixed-flow"
+      parameters:
+        componentName: "Generate Data"
+        columns:
+        - - "id"
+          - "NUMBER"
+          - "38"
+          - "0"
+        - - "category"
+          - "VARCHAR"
+          - "255"
+          - ""
+        values:
+        - - "1"
+          - "Electronics"
+        - - "2"
+          - "Clothing"
+    Demonstrate Variables (automatic variable):
+      type: "calculator"
+      sources:
+      - "Generate Data"
+      parameters:
+        componentName: "Demonstrate Variables (automatic variable)"
+        includeInputColumns: "Yes"
+        calculations:
+        - - "\"id\" + 1"
+          - "next_id"
+        - - "UPPER(\"category\")"
+          - "category_upper"
+        - - "ROW_NUMBER() OVER (ORDER BY \"id\")"
+          - "row_number"
+        - - "CURRENT_TIMESTAMP()"
+          - "current_timestamp"
+        - - "\"id\" * 2"
+          - "id_doubled"
+        - - "LENGTH(\"category\")"
+          - "category_length"
+        - - "\"category\" || '_' || \"id\""
+          - "category_with_id"
+        - - "\"category\" = 'Electronics'"
+          - "is_electronics"
+        - - "DATE_PART(month, current_timestamp)"
+          - "month"
+        - - "CURRENT_SCHEMA()"
+          - "schema"
+    ADDRESS_CSV:
+      type: "table-input"
+      parameters:
+        componentName: "ADDRESS_CSV"
+        database: "[Environment Default]"
+        schema: "SRC"
+        targetTable: "ADDRESS_CSV"
+        columnNames:
+        - "ADDR_VAL"
+        timeOffset:
+    Split Field 2:
+      type: "split-field"
+      sources:
+      - "ADDRESS_CSV"
+      parameters:
+        componentName: "Split Field 2"
+        inputColumn: "ADDR_VAL"
+        delimiter: ","
+        outputColumns:
+        - - "1"
+          - "AddressID"
+        - - "2"
+          - "AddressLine1"
+        - - "3"
+          - "AddressLine2"
+        - - "4"
+          - "City"
+        - - "5"
+          - "StateProvince"
+        - - "6"
+          - "CountryRegion"
+        - - "7"
+          - "Postalcode"
+        includeInputColumn: "Yes"
+    TABLE_A:
+      type: "table-input"
+      parameters:
+        componentName: "TABLE_A"
+        database: "[Environment Default]"
+        schema: "SRC"
+        targetTable: "TABLE_A"
+        columnNames:
+        - "DATA_VALUE"
+        timeOffset:
+    TABLE_B:
+      type: "table-input"
+      parameters:
+        componentName: "TABLE_B"
+        database: "[Environment Default]"
+        schema: "SRC"
+        targetTable: "TABLE_B"
+        columnNames:
+        - "DATA_VALUE"
+        timeOffset:
+    Except:
+      type: "except"
+      sources:
+      - "TABLE_A"
+      - "TABLE_B"
+      parameters:
+        componentName: "Except"
+        castTypes: "Yes"
+        primaryTable: "TABLE_A"
+    Intersect:
+      type: "intersect"
+      sources:
+      - "TABLE_B"
+      - "TABLE_A"
+      parameters:
+        componentName: "Intersect"
+        castTypes: "Yes"
+    Unite:
+      type: "unite"
+      sources:
+      - "TABLE_B"
+      - "TABLE_A"
+      parameters:
+        componentName: "Unite"
+        method: "All Columns"
+        castTypes: "Yes"
+        addSourceComponentColumn: "No"
+        removeDuplicates: "Yes"
+    except:
+      type: "rewrite-table"
+      sources:
+      - "Except"
+      parameters:
+        componentName: "except"
+        warehouse: "[Environment Default]"
+        database: "[Environment Default]"
+        schema: "[Environment Default]"
+        targetTable: "tableA_except_tableB"
+        orderBy:
+      postProcessing:
+        updateScalarVariables:
+    intersect:
+      type: "rewrite-table"
+      sources:
+      - "Intersect"
+      parameters:
+        componentName: "intersect"
+        warehouse: "[Environment Default]"
+        database: "[Environment Default]"
+        schema: "[Environment Default]"
+        targetTable: "tableA_intersect_tableB"
+        orderBy:
+      postProcessing:
+        updateScalarVariables:
+    unite:
+      type: "rewrite-table"
+      sources:
+      - "Unite"
+      parameters:
+        componentName: "unite"
+        warehouse: "[Environment Default]"
+        database: "[Environment Default]"
+        schema: "[Environment Default]"
+        targetTable: "tableA_unite_tableB"
+        orderBy:
+      postProcessing:
+        updateScalarVariables:
   variables:
     grid_color:
       metadata:
@@ -218,66 +468,151 @@ design:
   components:
     Customers:
       position:
-        x: -310
+        x: -440
         "y": -10
       tempMetlId: 1
     Extract Nested Data:
       position:
-        x: -150
+        x: -330
         "y": -10
       tempMetlId: 2
     Rewrite Table:
       position:
-        x: -60
-        "y": 170
+        x: -140
+        "y": 120
       tempMetlId: 3
     SQL:
       position:
-        x: 30
-        "y": -140
+        x: -90
+        "y": -130
       tempMetlId: 4
     Aggregate:
       position:
-        x: 210
-        "y": -150
+        x: 50
+        "y": -130
       tempMetlId: 5
     SQL 2:
       position:
-        x: 360
-        "y": -90
+        x: 160
+        "y": -130
       tempMetlId: 6
     Calculator:
       position:
-        x: 240
-        "y": 300
-      tempMetlId: 8
+        x: 40
+        "y": 160
+      tempMetlId: 7
     Construct Variant:
       position:
-        x: 260
-        "y": 160
-      tempMetlId: 9
+        x: 130
+        "y": 80
+      tempMetlId: 8
     Split Field:
       position:
-        x: -150
-        "y": 320
-      tempMetlId: 10
+        x: -160
+        "y": 200
+      tempMetlId: 9
     Detect Changes:
       position:
-        x: 430
-        "y": 110
-      tempMetlId: 11
+        x: 170
+        "y": -10
+      tempMetlId: 10
     SQL 3:
       position:
-        x: 570
+        x: 40
         "y": -10
-      tempMetlId: 12
+      tempMetlId: 11
     SQL 4:
       position:
-        x: 520
+        x: 270
         "y": -130
-      tempMetlId: 13
+      tempMetlId: 12
     Map Values:
       position:
-        x: 680
+        x: 370
         "y": -130
+      tempMetlId: 13
+    MS_CUSTOMER:
+      position:
+        x: 320
+        "y": 160
       tempMetlId: 14
+    MS_ADDRESS:
+      position:
+        x: 320
+        "y": -40
+      tempMetlId: 15
+    MS_CUSTOMERADDRESS:
+      position:
+        x: 320
+        "y": 40
+      tempMetlId: 16
+    Join:
+      position:
+        x: 440
+        "y": 40
+      tempMetlId: 17
+    Create View:
+      position:
+        x: 520
+        "y": 40
+      tempMetlId: 18
+    Generate Data:
+      position:
+        x: 0
+        "y": 300
+      tempMetlId: 19
+    Demonstrate Variables (automatic variable):
+      position:
+        x: 200
+        "y": 300
+      tempMetlId: 20
+    ADDRESS_CSV:
+      position:
+        x: 350
+        "y": 300
+      tempMetlId: 21
+    Split Field 2:
+      position:
+        x: 470
+        "y": 300
+      tempMetlId: 22
+    TABLE_A:
+      position:
+        x: 610
+        "y": 130
+      tempMetlId: 23
+    TABLE_B:
+      position:
+        x: 610
+        "y": 250
+      tempMetlId: 24
+    Except:
+      position:
+        x: 770
+        "y": 70
+      tempMetlId: 25
+    Intersect:
+      position:
+        x: 770
+        "y": 200
+      tempMetlId: 26
+    Unite:
+      position:
+        x: 770
+        "y": 330
+      tempMetlId: 27
+    except:
+      position:
+        x: 910
+        "y": 70
+      tempMetlId: 28
+    intersect:
+      position:
+        x: 910
+        "y": 200
+      tempMetlId: 29
+    unite:
+      position:
+        x: 910
+        "y": 330
+      tempMetlId: 30
