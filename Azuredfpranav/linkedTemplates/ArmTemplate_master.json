@@ -19,6 +19,10 @@
 			"type": "string",
 			"defaultValue": "https://storageaccdb269.dfs.core.windows.net/"
 		},
+		"Linked_Git_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -54,6 +58,9 @@
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"Linked_Git_properties_typeProperties_url": {
+						"value": "[parameters('Linked_Git_properties_typeProperties_url')]"
 					}
 				}
 			},

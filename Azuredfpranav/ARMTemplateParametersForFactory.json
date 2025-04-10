@@ -13,6 +13,9 @@
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://storageaccdb269.dfs.core.windows.net/"
+		},
+		"Linked_Git_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com"
 		}
 	}
 }
