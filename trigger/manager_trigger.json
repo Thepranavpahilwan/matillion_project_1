@@ -2,18 +2,23 @@
 	"name": "manager_trigger",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
 					"referenceName": "storage_based_trigger",
 					"type": "PipelineReference"
+				},
+				"parameters": {
+					"filename": "@TriggerBody().filename",
+					"folder": "@triggerBody().folder"
 				}
 			}
 		],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
-			"blobPathBeginsWith": "/source/blobs/csvfiles/*.csv",
+			"blobPathBeginsWith": "/source/blobs/csvfiles",
+			"blobPathEndsWith": ".csv",
 			"ignoreEmptyBlobs": true,
 			"scope": "/subscriptions/2e2b3d45-4d6f-47a4-9346-2652b2fa2762/resourceGroups/DatabricksPranav/providers/Microsoft.Storage/storageAccounts/storageaccdb269",
 			"events": [

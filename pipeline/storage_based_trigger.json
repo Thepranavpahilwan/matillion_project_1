@@ -50,17 +50,37 @@
 				"inputs": [
 					{
 						"referenceName": "csv_source",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": {
+								"value": "@pipeline().parameters.filename",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "sink_destination",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": {
+								"value": "@pipeline().parameters.filename",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"filename": {
+				"type": "string"
+			},
+			"folder": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
