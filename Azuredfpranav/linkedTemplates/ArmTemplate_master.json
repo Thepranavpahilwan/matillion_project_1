@@ -23,7 +23,11 @@
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com"
 		},
-		"manager_trigger_properties_typeProperties_scope": {
+		"storage_trigger_properties_storage_based_trigger_parameters_file_name": {
+			"type": "string",
+			"defaultValue": "file_name"
+		},
+		"storage_trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2e2b3d45-4d6f-47a4-9346-2652b2fa2762/resourceGroups/DatabricksPranav/providers/Microsoft.Storage/storageAccounts/storageaccdb269"
 		},
@@ -84,8 +88,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"manager_trigger_properties_typeProperties_scope": {
-						"value": "[parameters('manager_trigger_properties_typeProperties_scope')]"
+					"storage_trigger_properties_storage_based_trigger_parameters_file_name": {
+						"value": "[parameters('storage_trigger_properties_storage_based_trigger_parameters_file_name')]"
+					},
+					"storage_trigger_properties_typeProperties_scope": {
+						"value": "[parameters('storage_trigger_properties_typeProperties_scope')]"
 					}
 				}
 			},

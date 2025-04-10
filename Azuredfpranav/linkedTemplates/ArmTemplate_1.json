@@ -7,7 +7,11 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "Azuredfpranav"
 		},
-		"manager_trigger_properties_typeProperties_scope": {
+		"storage_trigger_properties_storage_based_trigger_parameters_file_name": {
+			"type": "string",
+			"defaultValue": "file_name"
+		},
+		"storage_trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2e2b3d45-4d6f-47a4-9346-2652b2fa2762/resourceGroups/DatabricksPranav/providers/Microsoft.Storage/storageAccounts/storageaccdb269"
 		}
@@ -17,7 +21,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/manager_trigger')]",
+			"name": "[concat(parameters('factoryName'), '/storage_trigger')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -29,14 +33,16 @@
 							"referenceName": "storage_based_trigger",
 							"type": "PipelineReference"
 						},
-						"parameters": {}
+						"parameters": {
+							"file_name": "[parameters('storage_trigger_properties_storage_based_trigger_parameters_file_name')]"
+						}
 					}
 				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
 					"blobPathBeginsWith": "/source/blobs/csvfiles/*.csv",
 					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('manager_trigger_properties_typeProperties_scope')]",
+					"scope": "[parameters('storage_trigger_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated"
 					]
