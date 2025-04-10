@@ -1,0 +1,9 @@
+{
+	"name": "Azuredfpranav",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "03d07806-e0f7-49a7-b1e3-ed69482fbad6",
+		"tenantId": "5c97c1d2-6e54-4d83-99e9-b88cdd1e026c"
+	}
+}
