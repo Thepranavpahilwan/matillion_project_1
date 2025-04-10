@@ -120,7 +120,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"file_name": {
-														"value": "@item().name",
+														"value": "@activity('Get Metadata2').output.itemName",
 														"type": "Expression"
 													}
 												}
@@ -132,7 +132,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"file_name": {
-														"value": "@item().name",
+														"value": "@activity('Get Metadata2').output.itemName",
 														"type": "Expression"
 													}
 												}
@@ -170,6 +170,7 @@
 								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
