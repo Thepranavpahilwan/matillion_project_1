@@ -50,13 +50,7 @@
 				"inputs": [
 					{
 						"referenceName": "csv_source",
-						"type": "DatasetReference",
-						"parameters": {
-							"file_name": {
-								"value": "@pipeline().parameters.file_name",
-								"type": "Expression"
-							}
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
@@ -67,11 +61,6 @@
 				]
 			}
 		],
-		"parameters": {
-			"file_name": {
-				"type": "string"
-			}
-		},
 		"annotations": []
 	}
 }
