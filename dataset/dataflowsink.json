@@ -1,5 +1,5 @@
 {
-	"name": "sink_csv",
+	"name": "dataflowsink",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "csvfiles",
-				"fileSystem": "destination"
+				"folderPath": "dataflowOutput",
+				"fileSystem": "reporting"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
