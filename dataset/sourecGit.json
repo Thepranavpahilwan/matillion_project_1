@@ -1,0 +1,22 @@
+{
+	"name": "sourecGit",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Linked_Git",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "Thepranavpahilwan/Zomato-database-analysis/refs/heads/main/Datasets%20zomato/customer_orders.csv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
