@@ -125,6 +125,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"tfilename": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"lastPublishTime": "2025-04-10T07:12:13Z"
 	},
