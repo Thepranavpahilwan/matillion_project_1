@@ -423,11 +423,6 @@
 					"referenceName": "AzureDataLakeStorage1",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"file_name": {
-						"type": "string"
-					}
-				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -933,12 +928,7 @@
 							{
 								"referenceName": "csv_source",
 								"type": "DatasetReference",
-								"parameters": {
-									"file_name": {
-										"value": "@pipeline().parameters.file_name",
-										"type": "Expression"
-									}
-								}
+								"parameters": {}
 							}
 						],
 						"outputs": [
@@ -952,11 +942,6 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"file_name": {
-						"type": "string"
-					}
 				},
 				"annotations": []
 			},

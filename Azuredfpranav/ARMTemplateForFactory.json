@@ -23,10 +23,6 @@
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com"
 		},
-		"storage_trigger_properties_storage_based_trigger_parameters_file_name": {
-			"type": "string",
-			"defaultValue": "file_name"
-		},
 		"storage_trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2e2b3d45-4d6f-47a4-9346-2652b2fa2762/resourceGroups/DatabricksPranav/providers/Microsoft.Storage/storageAccounts/storageaccdb269"
@@ -1100,12 +1096,7 @@
 							{
 								"referenceName": "csv_source",
 								"type": "DatasetReference",
-								"parameters": {
-									"file_name": {
-										"value": "@pipeline().parameters.file_name",
-										"type": "Expression"
-									}
-								}
+								"parameters": {}
 							}
 						],
 						"outputs": [
@@ -1119,11 +1110,6 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"file_name": {
-						"type": "string"
-					}
 				},
 				"annotations": []
 			},
@@ -1140,11 +1126,6 @@
 				"linkedServiceName": {
 					"referenceName": "AzureDataLakeStorage1",
 					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"file_name": {
-						"type": "string"
-					}
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -1210,14 +1191,12 @@
 							"referenceName": "storage_based_trigger",
 							"type": "PipelineReference"
 						},
-						"parameters": {
-							"file_name": "[parameters('storage_trigger_properties_storage_based_trigger_parameters_file_name')]"
-						}
+						"parameters": {}
 					}
 				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
-					"blobPathBeginsWith": "/source/blobs/csvfiles/*.csv",
+					"blobPathBeginsWith": "/source/blobs/csvfiles/fact_sales.csv",
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('storage_trigger_properties_typeProperties_scope')]",
 					"events": [
