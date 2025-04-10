@@ -27,14 +27,6 @@
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com"
 		},
-		"manager_trigger_properties_Practice_parameters_tfilename": {
-			"type": "string",
-			"defaultValue": "@triggerBody().fileName"
-		},
-		"manager_trigger_properties_Practice_parameters_pipelinerun": {
-			"type": "string",
-			"defaultValue": "@utcNow()"
-		},
 		"manager_trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2e2b3d45-4d6f-47a4-9346-2652b2fa2762/resourceGroups/DatabricksPranav/providers/Microsoft.Storage/storageAccounts/storageaccdb269"
@@ -84,6 +76,9 @@
 					},
 					"Linked_Git_properties_typeProperties_url": {
 						"value": "[parameters('Linked_Git_properties_typeProperties_url')]"
+					},
+					"manager_trigger_properties_typeProperties_scope": {
+						"value": "[parameters('manager_trigger_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -102,15 +97,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"manager_trigger_properties_Practice_parameters_tfilename": {
-						"value": "[parameters('manager_trigger_properties_Practice_parameters_tfilename')]"
-					},
-					"manager_trigger_properties_Practice_parameters_pipelinerun": {
-						"value": "[parameters('manager_trigger_properties_Practice_parameters_pipelinerun')]"
-					},
-					"manager_trigger_properties_typeProperties_scope": {
-						"value": "[parameters('manager_trigger_properties_typeProperties_scope')]"
 					},
 					"storage_trigger_properties_typeProperties_scope": {
 						"value": "[parameters('storage_trigger_properties_typeProperties_scope')]"
