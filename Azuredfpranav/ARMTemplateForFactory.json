@@ -31,6 +31,10 @@
 			"type": "string",
 			"defaultValue": "@triggerBody().fileName"
 		},
+		"manager_trigger_properties_Practice_parameters_pipelinerun": {
+			"type": "string",
+			"defaultValue": "@utcNow()"
+		},
 		"manager_trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2e2b3d45-4d6f-47a4-9346-2652b2fa2762/resourceGroups/DatabricksPranav/providers/Microsoft.Storage/storageAccounts/storageaccdb269"
@@ -294,74 +298,88 @@
 							"isSequential": true,
 							"activities": [
 								{
-									"name": "Copy data1",
-									"type": "Copy",
+									"name": "If Condition1",
+									"type": "IfCondition",
 									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
 									"userProperties": [],
 									"typeProperties": {
-										"source": {
-											"type": "DelimitedTextSource",
-											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "DelimitedTextReadSettings"
-											}
+										"expression": {
+											"value": "@greater(item().lastModified, pipeline().parameters.pipelinerun)",
+											"type": "Expression"
 										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
+										"ifTrueActivities": [
+											{
+												"name": "Copy data1_copy1",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "DelimitedTextSource",
+														"storeSettings": {
+															"type": "AzureBlobFSReadSettings",
+															"recursive": true,
+															"enablePartitionDiscovery": false
+														},
+														"formatSettings": {
+															"type": "DelimitedTextReadSettings"
+														}
+													},
+													"sink": {
+														"type": "DelimitedTextSink",
+														"storeSettings": {
+															"type": "AzureBlobFSWriteSettings"
+														},
+														"formatSettings": {
+															"type": "DelimitedTextWriteSettings",
+															"quoteAllText": true,
+															"fileExtension": ".txt"
+														}
+													},
+													"enableStaging": false,
+													"translator": {
+														"type": "TabularTranslator",
+														"typeConversion": true,
+														"typeConversionSettings": {
+															"allowDataTruncation": true,
+															"treatBooleanAsNumber": false
+														}
+													}
+												},
+												"inputs": [
+													{
+														"referenceName": "csv_source",
+														"type": "DatasetReference",
+														"parameters": {
+															"file_name": {
+																"value": "@item().name",
+																"type": "Expression"
+															}
+														}
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "sink_destination",
+														"type": "DatasetReference",
+														"parameters": {
+															"file_name": {
+																"value": "@item().name",
+																"type": "Expression"
+															}
+														}
+													}
+												]
 											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "csv_source",
-											"type": "DatasetReference",
-											"parameters": {
-												"file_name": {
-													"value": "@item().name",
-													"type": "Expression"
-												}
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "sink_destination",
-											"type": "DatasetReference",
-											"parameters": {
-												"file_name": {
-													"value": "@item().name",
-													"type": "Expression"
-												}
-											}
-										}
-									]
+										]
+									}
 								}
 							]
 						}
@@ -372,6 +390,9 @@
 				},
 				"parameters": {
 					"tfilename": {
+						"type": "string"
+					},
+					"pipelinerun": {
 						"type": "string"
 					}
 				},
@@ -1155,7 +1176,8 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"tfilename": "[parameters('manager_trigger_properties_Practice_parameters_tfilename')]"
+							"tfilename": "[parameters('manager_trigger_properties_Practice_parameters_tfilename')]",
+							"pipelinerun": "[parameters('manager_trigger_properties_Practice_parameters_pipelinerun')]"
 						}
 					}
 				],

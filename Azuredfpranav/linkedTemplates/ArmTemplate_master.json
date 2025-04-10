@@ -31,6 +31,10 @@
 			"type": "string",
 			"defaultValue": "@triggerBody().fileName"
 		},
+		"manager_trigger_properties_Practice_parameters_pipelinerun": {
+			"type": "string",
+			"defaultValue": "@utcNow()"
+		},
 		"manager_trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2e2b3d45-4d6f-47a4-9346-2652b2fa2762/resourceGroups/DatabricksPranav/providers/Microsoft.Storage/storageAccounts/storageaccdb269"
@@ -101,6 +105,9 @@
 					},
 					"manager_trigger_properties_Practice_parameters_tfilename": {
 						"value": "[parameters('manager_trigger_properties_Practice_parameters_tfilename')]"
+					},
+					"manager_trigger_properties_Practice_parameters_pipelinerun": {
+						"value": "[parameters('manager_trigger_properties_Practice_parameters_pipelinerun')]"
 					},
 					"manager_trigger_properties_typeProperties_scope": {
 						"value": "[parameters('manager_trigger_properties_typeProperties_scope')]"
