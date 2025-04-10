@@ -74,42 +74,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PIPE_hist_data_migration_redshift_snowflake_child')]",
-			"type": "Microsoft.DataFactory/factories/templates",
-			"apiVersion": "2018-06-01",
-			"properties": {},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PIPE_hist_data_migration_redshift_snowflake_master')]",
-			"type": "Microsoft.DataFactory/factories/templates",
-			"apiVersion": "2018-06-01",
-			"properties": {},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceFolder')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "source"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/SalesCsv')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -187,34 +151,29 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/sourecGit')]",
+			"name": "[concat(parameters('factoryName'), '/SourceFolder')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "Linked_Git",
+					"referenceName": "AzureDataLakeStorage1",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "DelimitedText",
+				"type": "Binary",
 				"typeProperties": {
 					"location": {
-						"type": "HttpServerLocation",
-						"relativeUrl": "Thepranavpahilwan/Zomato-database-analysis/refs/heads/main/Datasets%20zomato/customer_orders.csv"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "source"
+					}
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Linked_Git')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/sink_csv')]",
+			"name": "[concat(parameters('factoryName'), '/dataflow_source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -228,7 +187,7 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"folderPath": "csvfiles",
-						"fileSystem": "destination"
+						"fileSystem": "reporting"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -242,7 +201,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/sink_destination')]",
+			"name": "[concat(parameters('factoryName'), '/dataflowsink')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -255,9 +214,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "fact_sales.csv",
-						"folderPath": "csvfiles",
-						"fileSystem": "destination"
+						"folderPath": "dataflowOutput",
+						"fileSystem": "reporting"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -373,7 +331,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow_source')]",
+			"name": "[concat(parameters('factoryName'), '/sink_csv')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -387,7 +345,7 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"folderPath": "csvfiles",
-						"fileSystem": "reporting"
+						"fileSystem": "destination"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -401,7 +359,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflowsink')]",
+			"name": "[concat(parameters('factoryName'), '/sink_destination')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -414,8 +372,9 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "dataflowOutput",
-						"fileSystem": "reporting"
+						"fileName": "fact_sales.csv",
+						"folderPath": "csvfiles",
+						"fileSystem": "destination"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -426,6 +385,33 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sourecGit')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Linked_Git",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": "Thepranavpahilwan/Zomato-database-analysis/refs/heads/main/Datasets%20zomato/customer_orders.csv"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Linked_Git')]"
 			]
 		},
 		{
@@ -610,6 +596,82 @@
 				"[concat(variables('factoryId'), '/datasets/SalesCsv')]",
 				"[concat(variables('factoryId'), '/datasets/sink_destination')]",
 				"[concat(variables('factoryId'), '/datasets/SourceFolder')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/VarPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Metadata1",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "metadatads",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Get Metadata1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "var_files",
+							"value": {
+								"value": "@activity('Get Metadata1').output.childItems",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"var_files": {
+						"type": "Array"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/metadatads')]"
 			]
 		},
 		{
@@ -811,6 +873,7 @@
 							],
 							"storeSettings": {
 								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
 								"enablePartitionDiscovery": false
 							},
 							"formatSettings": {
@@ -951,8 +1014,7 @@
 								"datasetParameters": {
 									"source1": {},
 									"sink": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -981,7 +1043,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
