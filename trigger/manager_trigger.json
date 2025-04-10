@@ -10,7 +10,8 @@
 					"type": "PipelineReference"
 				},
 				"parameters": {
-					"tfilename": "@triggerBody().fileName"
+					"tfilename": "@triggerBody().fileName",
+					"pipelinerun": "@utcNow()"
 				}
 			}
 		],
