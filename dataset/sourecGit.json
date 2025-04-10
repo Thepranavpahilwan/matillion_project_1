@@ -2,7 +2,7 @@
 	"name": "sourecGit",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "Linked_Git",
+			"referenceName": "HttpServer1",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
-				"relativeUrl": "Thepranavpahilwan/Zomato-database-analysis/refs/heads/main/Datasets%20zomato/customer_orders.csv"
+				"relativeUrl": "anshlambagit/Azure-Data-Factory/refs/heads/main/Raw%20Data/Fact_Sales_1.csv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
