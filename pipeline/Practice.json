@@ -65,7 +65,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@less(activity('Get Metadata2').output.lastModified, pipeline().parameters.pipelinerun)",
+									"value": "@greater(activity('Get Metadata2').output.lastModified, pipeline().parameters.pipelinerun)",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
