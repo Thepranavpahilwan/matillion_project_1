@@ -344,7 +344,7 @@
 											"type": "DatasetReference",
 											"parameters": {
 												"file_name": {
-													"value": "@pipeline().parameters.tfilename",
+													"value": "@item().name",
 													"type": "Expression"
 												}
 											}
@@ -356,7 +356,7 @@
 											"type": "DatasetReference",
 											"parameters": {
 												"file_name": {
-													"value": "@pipeline().parameters.tfilename",
+													"value": "@item().name",
 													"type": "Expression"
 												}
 											}
