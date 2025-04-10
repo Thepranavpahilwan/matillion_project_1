@@ -1,5 +1,5 @@
 {
-	"name": "sink_csv",
+	"name": "sink_destination",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "sinkGit.csv",
+				"fileName": "fact_sales.csv",
 				"folderPath": "csvfiles",
 				"fileSystem": "destination"
 			},
