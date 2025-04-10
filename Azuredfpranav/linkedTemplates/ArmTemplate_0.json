@@ -619,9 +619,9 @@
 											"value": "@less(activity('Get Metadata2').output.lastModified, pipeline().parameters.pipelinerun)",
 											"type": "Expression"
 										},
-										"ifTrueActivities": [
+										"ifFalseActivities": [
 											{
-												"name": "Copy data1_copy1",
+												"name": "Copy data1_copy1_copy1",
 												"type": "Copy",
 												"dependsOn": [],
 												"policy": {
@@ -671,7 +671,7 @@
 														"type": "DatasetReference",
 														"parameters": {
 															"file_name": {
-																"value": "@activity('Get Metadata2').output.itemName",
+																"value": "@item().name",
 																"type": "Expression"
 															}
 														}
@@ -683,7 +683,7 @@
 														"type": "DatasetReference",
 														"parameters": {
 															"file_name": {
-																"value": "@activity('Get Metadata2').output.itemName",
+																"value": "@item().name",
 																"type": "Expression"
 															}
 														}
