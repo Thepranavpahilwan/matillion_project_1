@@ -6,16 +6,6 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "storage_based_trigger",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"filename": "@triggerBody().fileName",
-					"folder": "@triggerBody().folderPath"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "Practice",
 					"type": "PipelineReference"
 				}
