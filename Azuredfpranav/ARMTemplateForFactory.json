@@ -27,6 +27,10 @@
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com"
 		},
+		"manager_trigger_properties_Practice_parameters_tfilename": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
 		"manager_trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2e2b3d45-4d6f-47a4-9346-2652b2fa2762/resourceGroups/DatabricksPranav/providers/Microsoft.Storage/storageAccounts/storageaccdb269"
@@ -340,7 +344,7 @@
 											"type": "DatasetReference",
 											"parameters": {
 												"file_name": {
-													"value": "@item().name",
+													"value": "@pipeline().parameters.tfilename",
 													"type": "Expression"
 												}
 											}
@@ -352,7 +356,7 @@
 											"type": "DatasetReference",
 											"parameters": {
 												"file_name": {
-													"value": "@item().name",
+													"value": "@pipeline().parameters.tfilename",
 													"type": "Expression"
 												}
 											}
@@ -1150,7 +1154,9 @@
 							"referenceName": "Practice",
 							"type": "PipelineReference"
 						},
-						"parameters": {}
+						"parameters": {
+							"tfilename": "[parameters('manager_trigger_properties_Practice_parameters_tfilename')]"
+						}
 					}
 				],
 				"type": "BlobEventsTrigger",
