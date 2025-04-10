@@ -8,6 +8,9 @@
 				"pipelineReference": {
 					"referenceName": "Practice",
 					"type": "PipelineReference"
+				},
+				"parameters": {
+					"tfilename": "@triggerBody().fileName"
 				}
 			}
 		],
