@@ -60,6 +60,9 @@
 				]
 			}
 		],
+		"folder": {
+			"name": "practice"
+		},
 		"annotations": []
 	}
 }

@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "practice_datasets"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

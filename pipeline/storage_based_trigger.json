@@ -81,6 +81,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "practice"
+		},
 		"annotations": []
 	}
 }
