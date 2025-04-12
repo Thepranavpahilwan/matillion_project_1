@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "csvfiles",
+				"fileName": "Campaign_Data.xlsx",
 				"fileSystem": "destination"
 			},
 			"columnDelimiter": ",",

@@ -50,13 +50,7 @@
 				"inputs": [
 					{
 						"referenceName": "csv_source",
-						"type": "DatasetReference",
-						"parameters": {
-							"file_name": {
-								"value": "@pipeline().parameters.filename",
-								"type": "Expression"
-							}
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
@@ -79,6 +73,30 @@
 			},
 			"folder": {
 				"type": "string"
+			}
+		},
+		"variables": {
+			"var3": {
+				"type": "String"
+			},
+			"var4": {
+				"type": "String"
+			},
+			"json_time": {
+				"type": "String"
+			},
+			"order": {
+				"type": "String"
+			},
+			"destination_last_modified": {
+				"type": "String"
+			},
+			"latestTimestamp": {
+				"type": "String",
+				"defaultValue": "2025-04-10T10:00:00Z"
+			},
+			"last_modified": {
+				"type": "String"
 			}
 		},
 		"folder": {

@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"file_name": {
+			"d_file_name": {
 				"type": "string"
 			}
 		},
@@ -19,10 +19,9 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().file_name",
+					"value": "@dataset().d_file_name",
 					"type": "Expression"
 				},
-				"folderPath": "csvfiles",
 				"fileSystem": "destination"
 			},
 			"columnDelimiter": ",",

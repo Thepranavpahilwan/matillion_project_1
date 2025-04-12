@@ -1,14 +1,9 @@
 {
-	"name": "param_source",
+	"name": "csv_destination",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"p_filename": {
-				"type": "string"
-			}
 		},
 		"folder": {
 			"name": "practice_datasets"
@@ -18,11 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().p_filename",
-					"type": "Expression"
-				},
-				"fileSystem": "source"
+				"fileSystem": "destination"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

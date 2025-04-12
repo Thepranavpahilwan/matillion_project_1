@@ -1,17 +1,14 @@
 {
-	"name": "param_source",
+	"name": "sink_destination_final",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"p_filename": {
+			"filename": {
 				"type": "string"
 			}
-		},
-		"folder": {
-			"name": "practice_datasets"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
@@ -19,10 +16,10 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().p_filename",
+					"value": "@dataset().filename",
 					"type": "Expression"
 				},
-				"fileSystem": "source"
+				"fileSystem": "destination"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
