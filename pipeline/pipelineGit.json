@@ -36,30 +36,40 @@
 							"fileExtension": ".txt"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
 						"referenceName": "sourecGit",
 						"type": "DatasetReference"
 					}
-				],
-				"outputs": [
-					{
-						"referenceName": "sink_csv",
-						"type": "DatasetReference"
-					}
 				]
 			}
 		],
+		"variables": {
+			"var3": {
+				"type": "String"
+			},
+			"var4": {
+				"type": "String"
+			},
+			"json_time": {
+				"type": "String"
+			},
+			"order": {
+				"type": "String"
+			},
+			"destination_last_modified": {
+				"type": "String"
+			},
+			"latestTimestamp": {
+				"type": "String",
+				"defaultValue": "2025-04-10T10:00:00Z"
+			},
+			"last_modified": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "practice"
 		},
