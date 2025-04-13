@@ -1,0 +1,33 @@
+{
+	"name": "P1_ds_github",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Linked_Git",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "P1_netflix_project_datasets"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "Thepranavpahilwan/matillion_project_1/refs/heads/main/Netflix_azure_project_data/Netflix_Azure_Data_Engineering_Project-main/RawData_AND_Notebooks/@{dataset().file_name}",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
