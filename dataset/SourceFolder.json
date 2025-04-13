@@ -1,15 +1,19 @@
 {
-	"name": "Binary1",
+	"name": "SourceFolder",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "practice_datasets"
 		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"folderPath": "csvfiles",
 				"fileSystem": "source"
 			}
 		}
