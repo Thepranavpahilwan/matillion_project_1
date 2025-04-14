@@ -7,11 +7,11 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ADF-practice-269"
 		},
-		"trigger_event_properties_storage_based_trigger_parameters_filename": {
+		"event_trigger_properties_storage_based_trigger_parameters_filename": {
 			"type": "string",
 			"defaultValue": "@triggerBody().fileName"
 		},
-		"trigger_event_properties_typeProperties_scope": {
+		"event_trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/271b7c34-c842-43c4-bfe2-50cc58e0aa6f/resourceGroups/PranavDataEngineer/providers/Microsoft.Storage/storageAccounts/storageacc269df"
 		}
@@ -665,7 +665,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/trigger_event')]",
+			"name": "[concat(parameters('factoryName'), '/event_trigger')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -678,7 +678,7 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"filename": "[parameters('trigger_event_properties_storage_based_trigger_parameters_filename')]"
+							"filename": "[parameters('event_trigger_properties_storage_based_trigger_parameters_filename')]"
 						}
 					}
 				],
@@ -687,7 +687,7 @@
 					"blobPathBeginsWith": "/source/blobs/",
 					"blobPathEndsWith": ".csv",
 					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('trigger_event_properties_typeProperties_scope')]",
+					"scope": "[parameters('event_trigger_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated"
 					]

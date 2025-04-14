@@ -27,11 +27,11 @@
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com"
 		},
-		"trigger_event_properties_storage_based_trigger_parameters_filename": {
+		"event_trigger_properties_storage_based_trigger_parameters_filename": {
 			"type": "string",
 			"defaultValue": "@triggerBody().fileName"
 		},
-		"trigger_event_properties_typeProperties_scope": {
+		"event_trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/271b7c34-c842-43c4-bfe2-50cc58e0aa6f/resourceGroups/PranavDataEngineer/providers/Microsoft.Storage/storageAccounts/storageacc269df"
 		},
@@ -95,11 +95,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"trigger_event_properties_storage_based_trigger_parameters_filename": {
-						"value": "[parameters('trigger_event_properties_storage_based_trigger_parameters_filename')]"
+					"event_trigger_properties_storage_based_trigger_parameters_filename": {
+						"value": "[parameters('event_trigger_properties_storage_based_trigger_parameters_filename')]"
 					},
-					"trigger_event_properties_typeProperties_scope": {
-						"value": "[parameters('trigger_event_properties_typeProperties_scope')]"
+					"event_trigger_properties_typeProperties_scope": {
+						"value": "[parameters('event_trigger_properties_typeProperties_scope')]"
 					}
 				}
 			},
