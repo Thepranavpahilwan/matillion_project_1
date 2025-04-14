@@ -15,7 +15,13 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"fieldList": [],
+					"dataset": {
+						"referenceName": "csv_source",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
 						"recursive": true,
