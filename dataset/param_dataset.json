@@ -22,7 +22,6 @@
 					"value": "@dataset().p_filename",
 					"type": "Expression"
 				},
-				"folderPath": "csvfiles",
 				"fileSystem": "source"
 			},
 			"columnDelimiter": ",",
