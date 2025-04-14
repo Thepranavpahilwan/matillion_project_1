@@ -70,9 +70,6 @@
 		"parameters": {
 			"filename": {
 				"type": "string"
-			},
-			"folder": {
-				"type": "string"
 			}
 		},
 		"variables": {
