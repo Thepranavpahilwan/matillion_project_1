@@ -1,5 +1,5 @@
 {
-	"name": "event_trigger",
+	"name": "trigger_event",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
