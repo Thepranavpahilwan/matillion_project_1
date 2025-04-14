@@ -9,15 +9,6 @@
 					"referenceName": "prodpipeline",
 					"type": "PipelineReference"
 				}
-			},
-			{
-				"pipelineReference": {
-					"referenceName": "storage_based_trigger",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"filename": "@triggerBody().fileName"
-				}
 			}
 		],
 		"type": "BlobEventsTrigger",
