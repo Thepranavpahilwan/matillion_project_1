@@ -20,10 +20,10 @@
 		"Linked_Git_properties_typeProperties_url": {
 			"value": "https://raw.githubusercontent.com"
 		},
-		"event_trigger_properties_storage_based_trigger_parameters_filename": {
+		"trigger_event_properties_storage_based_trigger_parameters_filename": {
 			"value": "@triggerBody().fileName"
 		},
-		"event_trigger_properties_typeProperties_scope": {
+		"trigger_event_properties_typeProperties_scope": {
 			"value": "/subscriptions/271b7c34-c842-43c4-bfe2-50cc58e0aa6f/resourceGroups/PranavDataEngineer/providers/Microsoft.Storage/storageAccounts/storageacc269df"
 		}
 	}
