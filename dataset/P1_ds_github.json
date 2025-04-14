@@ -1,28 +1,27 @@
 {
-	"name": "param_dataset",
+	"name": "P1_ds_github",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureDataLakeStorage1",
+			"referenceName": "Linked_Git",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"p_filename": {
+			"file_name": {
 				"type": "string"
 			}
 		},
 		"folder": {
-			"name": "practice_datasets"
+			"name": "P1_netflix_project_datasets"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().p_filename",
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "Thepranavpahilwan/matillion_project_1/refs/heads/main/Netflix_azure_project_data/Netflix_Azure_Data_Engineering_Project-main/RawData_AND_Notebooks/@{dataset().file_name}",
 					"type": "Expression"
-				},
-				"fileSystem": "source"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

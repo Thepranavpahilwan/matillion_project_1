@@ -58,7 +58,7 @@
 						"referenceName": "sink_destination",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": {
+							"d_file_name": {
 								"value": "@pipeline().parameters.filename",
 								"type": "Expression"
 							}
@@ -69,9 +69,6 @@
 		],
 		"parameters": {
 			"filename": {
-				"type": "string"
-			},
-			"folder": {
 				"type": "string"
 			}
 		},

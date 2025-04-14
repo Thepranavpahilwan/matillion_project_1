@@ -1,28 +1,21 @@
 {
-	"name": "param_dataset",
+	"name": "p1_ds_validation",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"p_filename": {
-				"type": "string"
-			}
-		},
 		"folder": {
-			"name": "practice_datasets"
+			"name": "P1_netflix_project_datasets"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().p_filename",
-					"type": "Expression"
-				},
-				"fileSystem": "source"
+				"fileName": "netflix_titles.csv",
+				"folderPath": "raw",
+				"fileSystem": "p1-netflix-project"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
