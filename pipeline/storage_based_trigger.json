@@ -49,8 +49,14 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "csv_source",
-						"type": "DatasetReference"
+						"referenceName": "param_source",
+						"type": "DatasetReference",
+						"parameters": {
+							"p_filename": {
+								"value": "@pipeline().parameters.filename",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
