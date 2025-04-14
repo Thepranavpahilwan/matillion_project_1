@@ -1,13 +1,16 @@
 {
-	"name": "storage_trigger",
+	"name": "event_trigger",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "prodpipeline",
+					"referenceName": "storage_based_trigger",
 					"type": "PipelineReference"
+				},
+				"parameters": {
+					"filename": "@triggerBody().fileName"
 				}
 			}
 		],
