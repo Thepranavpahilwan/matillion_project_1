@@ -1,0 +1,38 @@
+{
+	"name": "copy_SqlServer_orders_test",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "practice_datasets"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "ORDER_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ORDER_DATE",
+				"type": "date"
+			},
+			{
+				"name": "CUSTOMER_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "ORDER_AMOUNT",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "orders_test"
+		}
+	}
+}
