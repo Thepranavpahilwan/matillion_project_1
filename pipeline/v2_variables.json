@@ -14,21 +14,69 @@
 				"typeProperties": {
 					"variableName": "pipelineName",
 					"value": {
-						"value": "@pipeline().parameters.pipeline_name",
+						"value": "@pipeline().Pipeline",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Append variable1",
+				"type": "AppendVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variablefile name",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "pipelines",
+					"value": {
+						"value": "@variables('pipelineName')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Append variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "final_var",
+					"value": {
+						"value": "@variables('pipelines')",
 						"type": "Expression"
 					}
 				}
 			}
 		],
-		"parameters": {
-			"pipeline_name": {
-				"type": "string",
-				"defaultValue": "@pipeline().Pipeline"
-			}
-		},
 		"variables": {
 			"pipelineName": {
 				"type": "String"
+			},
+			"pipelines": {
+				"type": "Array",
+				"defaultValue": [
+					"pipeline1",
+					"pipeline2"
+				]
+			},
+			"final_var": {
+				"type": "Array"
 			}
 		},
 		"folder": {
