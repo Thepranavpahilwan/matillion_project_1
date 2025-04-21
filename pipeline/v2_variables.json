@@ -1,0 +1,39 @@
+{
+	"name": "v2_variables",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variablefile name",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "pipelineName",
+					"value": {
+						"value": "@pipeline().parameters.pipeline_name",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"pipeline_name": {
+				"type": "string",
+				"defaultValue": "@pipeline().Pipeline"
+			}
+		},
+		"variables": {
+			"pipelineName": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "practice"
+		},
+		"annotations": []
+	}
+}
