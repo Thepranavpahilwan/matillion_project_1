@@ -62,8 +62,37 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "my_name",
+					"value": {
+						"value": "@pipeline().parameters.my_name",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"parameters": {
+			"my_name": {
+				"type": "string"
+			}
+		},
 		"variables": {
 			"pipelineName": {
 				"type": "String"
@@ -77,6 +106,9 @@
 			},
 			"final_var": {
 				"type": "Array"
+			},
+			"my_name": {
+				"type": "String"
 			}
 		},
 		"folder": {
