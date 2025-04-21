@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADF-practice-269"
+		},
+		"AzureBlobStorage11_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"SqlServer_password": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://storageacc269df.dfs.core.windows.net/"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/"
+		},
+		"Linked_Git_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com"
+		},
+		"SqlServer_properties_typeProperties_server": {
+			"value": "sqlserver269.database.windows.net"
+		},
+		"SqlServer_properties_typeProperties_database": {
+			"value": "Pranav"
+		},
+		"SqlServer_properties_typeProperties_userName": {
+			"value": "sqladmin"
+		},
+		"e_trigger_properties_storage_based_trigger_parameters_filename": {
+			"value": "@triggerBody().fileName"
+		},
+		"e_trigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/271b7c34-c842-43c4-bfe2-50cc58e0aa6f/resourceGroups/PranavDataEngineer/providers/Microsoft.Storage/storageAccounts/storageacc269df"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
