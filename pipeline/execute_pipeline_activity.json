@@ -1,0 +1,39 @@
+{
+	"name": "execute_pipeline_activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute v2_variables",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "v2_variables",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"my_name": {
+							"value": "@pipeline().parameters.name",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"name": {
+				"type": "string",
+				"defaultValue": "Pranav"
+			}
+		},
+		"folder": {
+			"name": "practice"
+		},
+		"annotations": []
+	}
+}

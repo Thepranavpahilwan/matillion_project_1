@@ -1,0 +1,21 @@
+{
+	"name": "v3_foreach_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "practice_datasets"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "lastRun.txt",
+				"fileSystem": "control"
+			}
+		}
+	}
+}

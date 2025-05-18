@@ -1,0 +1,21 @@
+{
+	"name": "v5_input_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "practice_datasets"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "utcNow.txt",
+				"fileSystem": "control"
+			}
+		}
+	}
+}

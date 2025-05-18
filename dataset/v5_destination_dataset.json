@@ -1,0 +1,29 @@
+{
+	"name": "v5_destination_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"outputFolder": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "practice_datasets"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().outputFolder",
+					"type": "Expression"
+				},
+				"fileSystem": "destination"
+			}
+		}
+	}
+}
